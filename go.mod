@@ -3,7 +3,7 @@ module github.com/obsidian-mcp-server/obsidian-mcp-server
 go 1.24.0
 
 require (
-	github.com/oapi-codegen/runtime v1.1.0
+	github.com/oapi-codegen/runtime v1.1.2
 	github.com/stretchr/testify v1.11.1
 )
 
