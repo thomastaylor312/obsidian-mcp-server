@@ -7,6 +7,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"os"
 	"strconv"
 	"strings"
 
@@ -62,7 +63,12 @@ func (c *Client) makeRequest(method, path string, headers map[string]string, bod
 	if err != nil {
 		return nil, fmt.Errorf("request failed: %w", err)
 	}
-	defer resp.Body.Close()
+	defer func() {
+		if closeErr := resp.Body.Close(); closeErr != nil {
+			// Log the close error but don't interfere with the main error handling
+			fmt.Fprintf(os.Stderr, "Failed to close response body: %v\n", closeErr)
+		}
+	}()
 
 	responseBody, err := io.ReadAll(resp.Body)
 	if err != nil {
@@ -175,11 +181,11 @@ func (c *Client) AppendToFile(filename, content string) (string, error) {
 func (c *Client) PatchFileContent(filename, operation, targetType, target, content, contentType, delimiter string) (string, error) {
 	apiPath := "/vault/" + strings.TrimPrefix(filename, "/")
 	headers := map[string]string{
-		"Content-Type":       contentType,
-		"Operation":          operation,
-		"Target-Type":        targetType,
-		"Target":             url.QueryEscape(target),
-		"Target-Delimiter":   delimiter,
+		"Content-Type":     contentType,
+		"Operation":        operation,
+		"Target-Type":      targetType,
+		"Target":           url.QueryEscape(target),
+		"Target-Delimiter": delimiter,
 	}
 
 	body := strings.NewReader(content)

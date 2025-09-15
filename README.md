@@ -1,6 +1,6 @@
 # Obsidian MCP Server
 
-[![CI](https://github.com/obsidian-mcp-server/obsidian-mcp-server/actions/workflows/ci.yml/badge.svg)](https://github.com/obsidian-mcp-server/obsidian-mcp-server/actions/workflows/ci.yml)
+[![CI](https://github.com/thomastaylor312/obsidian-mcp-server/actions/workflows/ci.yml/badge.svg)](https://github.com/thomastaylor312/obsidian-mcp-server/actions/workflows/ci.yml)
 [![Go Report Card](https://goreportcard.com/badge/github.com/obsidian-mcp-server/obsidian-mcp-server)](https://goreportcard.com/report/github.com/obsidian-mcp-server/obsidian-mcp-server)
 
 A Model Context Protocol (MCP) server for Obsidian that provides programmatic access to your Obsidian vault through the Local REST API plugin. This is mostly coded via AI, with some checks on my end. Several projects like this already exist, but I wanted complete control over what the server is doing.

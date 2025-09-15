@@ -7,12 +7,9 @@ updates:
       interval: "weekly"
       day: "monday"
       time: "06:00"
-      timezone: "UTC"
     open-pull-requests-limit: 10
-    reviewers:
-      - "oftaylor"
     assignees:
-      - "oftaylor"
+      - "thomastaylor312"
     labels:
       - "dependencies"
       - "go"
@@ -20,24 +17,11 @@ updates:
       prefix: "chore"
       prefix-development: "chore"
       include: "scope"
-    # Group related dependencies together
-    groups:
-      oapi-codegen:
-        patterns:
-          - "github.com/oapi-codegen/*"
-      testing:
-        patterns:
-          - "github.com/stretchr/testify"
-          - "*testify*"
-      runtime:
-        patterns:
-          - "github.com/google/*"
-          - "github.com/apapsch/*"
     # Allow both direct and indirect dependency updates
     allow:
       - dependency-type: "direct"
       - dependency-type: "indirect"
-    # Ignore major version updates for stability (can be changed as needed)
+    # Ignore major version updates for stability
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
@@ -49,12 +33,9 @@ updates:
       interval: "weekly"
       day: "monday"
       time: "06:00"
-      timezone: "UTC"
     open-pull-requests-limit: 5
-    reviewers:
-      - "oftaylor"
     assignees:
-      - "oftaylor"
+      - "thomastaylor312"
     labels:
       - "dependencies"
       - "github-actions"

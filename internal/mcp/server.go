@@ -545,7 +545,10 @@ func (s *MCPServer) sendError(id any, code int, message, data string) {
 			Data:    data,
 		},
 	}
-	s.sendResponse(response)
+	if err := s.sendResponse(response); err != nil {
+		// Log error but don't return it since we're already handling an error
+		fmt.Fprintf(os.Stderr, "Failed to send error response: %v\n", err)
+	}
 }
 
 // createErrorResponse creates an error response

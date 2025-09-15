@@ -40,7 +40,8 @@ func TestMakeRequest(t *testing.T) {
 		// Return test response
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(`{"status": "ok"}`))
+		_, err := w.Write([]byte(`{"status": "ok"}`))
+		require.NoError(t, err)
 	}))
 	defer server.Close()
 
@@ -60,7 +61,8 @@ func TestMakeRequestErrorHandling(t *testing.T) {
 	// Create a test server that returns an error
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusNotFound)
-		w.Write([]byte(`{"error": "Not Found"}`))
+		_, err := w.Write([]byte(`{"error": "Not Found"}`))
+		require.NoError(t, err)
 	}))
 	defer server.Close()
 
@@ -79,7 +81,7 @@ func TestGetServerInfo(t *testing.T) {
 
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(`{
+		_, err := w.Write([]byte(`{
 			"ok": "OK",
 			"service": "Obsidian Local REST API",
 			"authenticated": true,
@@ -88,6 +90,7 @@ func TestGetServerInfo(t *testing.T) {
 				"self": "3.0.0"
 			}
 		}`))
+		require.NoError(t, err)
 	}))
 	defer server.Close()
 
@@ -107,13 +110,14 @@ func TestListVaultFiles(t *testing.T) {
 
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(`{
+		_, err := w.Write([]byte(`{
 			"files": [
 				"note1.md",
 				"note2.md",
 				"subfolder/"
 			]
 		}`))
+		require.NoError(t, err)
 	}))
 	defer server.Close()
 
@@ -132,12 +136,13 @@ func TestListVaultFilesWithPath(t *testing.T) {
 
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(`{
+		_, err := w.Write([]byte(`{
 			"files": [
 				"subnote1.md",
 				"subnote2.md"
 			]
 		}`))
+		require.NoError(t, err)
 	}))
 	defer server.Close()
 
@@ -156,7 +161,8 @@ func TestGetFileContent(t *testing.T) {
 
 		w.Header().Set("Content-Type", "text/markdown")
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte("# Test Note\n\nThis is test content."))
+		_, err := w.Write([]byte("# Test Note\n\nThis is test content."))
+		require.NoError(t, err)
 	}))
 	defer server.Close()
 
@@ -175,7 +181,7 @@ func TestGetFileContentJSON(t *testing.T) {
 
 		w.Header().Set("Content-Type", "application/vnd.olrapi.note+json")
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(`{
+		_, err := w.Write([]byte(`{
 			"content": "# Test Note\n\nThis is test content.",
 			"path": "test.md",
 			"tags": ["test"],
@@ -186,6 +192,7 @@ func TestGetFileContentJSON(t *testing.T) {
 				"size": 1024
 			}
 		}`))
+		require.NoError(t, err)
 	}))
 	defer server.Close()
 
@@ -279,7 +286,7 @@ func TestSearchVaultSimple(t *testing.T) {
 
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(`[
+		_, err := w.Write([]byte(`[
 			{
 				"filename": "note1.md",
 				"matches": [
@@ -291,6 +298,7 @@ func TestSearchVaultSimple(t *testing.T) {
 				"score": 0.95
 			}
 		]`))
+		require.NoError(t, err)
 	}))
 	defer server.Close()
 
@@ -310,12 +318,13 @@ func TestSearchVaultAdvanced(t *testing.T) {
 
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(`[
+		_, err := w.Write([]byte(`[
 			{
 				"filename": "note1.md",
 				"result": ["value1", "value2"]
 			}
 		]`))
+		require.NoError(t, err)
 	}))
 	defer server.Close()
 
@@ -334,7 +343,7 @@ func TestListCommands(t *testing.T) {
 
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(`{
+		_, err := w.Write([]byte(`{
 			"commands": [
 				{
 					"id": "global-search:open",
@@ -346,6 +355,7 @@ func TestListCommands(t *testing.T) {
 				}
 			]
 		}`))
+		require.NoError(t, err)
 	}))
 	defer server.Close()
 
