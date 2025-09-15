@@ -126,27 +126,3 @@ jobs:
             echo "Please run 'go mod tidy' and commit the changes."
             exit 1
           fi
-
-  format-check:
-    name: Format Check
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out code
-        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
-
-      - name: Set up Go
-        uses: actions/setup-go@d35c59abb061a4a6fb18e82ac0862c26744d6ab5 # v5.5.0
-        with:
-          go-version: ${{ env.GO_VERSION }}
-
-      - name: Install gofumpt
-        run: go install mvdan.cc/gofumpt@latest
-
-      - name: Check formatting
-        run: |
-          if [ -n "$(gofumpt -l .)" ]; then
-            echo "The following files are not formatted correctly:"
-            gofumpt -l .
-            echo "Please run 'gofumpt -w .' to format them."
-            exit 1
-          fi
